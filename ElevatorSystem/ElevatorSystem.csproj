@@ -67,6 +67,18 @@
     <Compile Include="Forms\CreatePersonForm.Designer.cs">
       <DependentUpon>CreatePersonForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\LIftInformation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LIftInformation.Designer.cs">
+      <DependentUpon>LIftInformation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PersonInformation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PersonInformation.Designer.cs">
+      <DependentUpon>PersonInformation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\StopSimilationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,10 +102,17 @@
     <Compile Include="Class\Person.cs" />
     <Compile Include="IntCompareDown.cs" />
     <Compile Include="IntCompare.cs" />
+    <Compile Include="PersonStatus.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\CreatePersonForm.resx">
       <DependentUpon>CreatePersonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LIftInformation.resx">
+      <DependentUpon>LIftInformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PersonInformation.resx">
+      <DependentUpon>PersonInformation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\StartSimulationForm.resx">
       <DependentUpon>StartSimulationForm.cs</DependentUpon>

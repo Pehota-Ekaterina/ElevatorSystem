@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ElevatorSystem
+namespace ElevatorSystem ///мое
 {
     public partial class FirstForm : Form
     {
@@ -22,6 +22,10 @@ namespace ElevatorSystem
         CreatePersonForm createPerson;
         public StartSimulationForm form;
 
+        private StatusBar statusBar1 = new StatusBar();
+        private StatusBarPanel panel1 = new StatusBarPanel();
+        private StatusBarPanel panel2 = new StatusBarPanel();
+
         private List<Floor> floors = new List<Floor>();
         private List<Person> persons = new List<Person>();
         private Lift lift;
@@ -30,11 +34,13 @@ namespace ElevatorSystem
         private int numberOfFloor;
         private int positionX;
         private int positionY;
+        private int sumPersons;
 
         public FirstForm()
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
+            createStatusBar();
             workSystem = false;
             dateTime = new DateTime(0, 0);
             positionX = Screen.PrimaryScreen.Bounds.Width / 3;
@@ -71,8 +77,8 @@ namespace ElevatorSystem
                 workSystem = false;
                 timer1.Enabled = false;
                 dateTime = new DateTime(0, 0);
-                StopSimilationForm exitData = new StopSimilationForm(0, 0, 0, 0);
-                exitData.ShowDialog();
+                StopSimilationForm stopSimilationForm = new StopSimilationForm(lift.MoveChange, lift.IdleTrips, lift.sumWeight, sumPersons);
+                stopSimilationForm.ShowDialog();
                 buttonStart.BackColor = Color.White;
                 buttonStart.ForeColor = Color.Black;
                 buttonStart.Text = "Запустить симуляцию";
@@ -88,6 +94,7 @@ namespace ElevatorSystem
             Invalidate();
             persons.Clear();
             floors.Clear();
+            sumPersons = 0;
             lift = Lift.newInstance();
         }
 
@@ -102,6 +109,7 @@ namespace ElevatorSystem
                     Person person = new Person(persons.Count, positionX, floors[createPerson.FirstFloor - 1].PositionY,
                     new int[] { createPerson.FirstFloor - 1, createPerson.EndFloor - 1 });
                     persons.Add(person);
+                    sumPersons++;
                     g.DrawImage(Properties.Resources.person, person.PositionX, person.PositionY);
                 }
                 else
@@ -113,6 +121,7 @@ namespace ElevatorSystem
                     }
                     Person person = new Person(persons.Count, positionX, thisY + 15,
                     new int[] { createPerson.FirstFloor - 1, createPerson.EndFloor - 1 });
+                    sumPersons++;
                     persons.Add(person);
                 }
             } catch (Exception ignore){ }
@@ -139,8 +148,13 @@ namespace ElevatorSystem
                 Random rnd = new Random((int)(DateTime.Now.Ticks));
                 int num1 = rnd.Next(0, numberOfFloor - 1);
                 int num2 = rnd.Next(0, numberOfFloor - 1);
+                while (num2 == num1)
+                {
+                    num2 = rnd.Next(0, numberOfFloor - 1);
+                }
                 Person person = new Person(i, positionX, floors[num1].PositionY, new int[] {num1, num2});
                 persons.Add(person);
+                sumPersons++;
                 g.DrawImage(Properties.Resources.person, persons[i].PositionX, persons[i].PositionY);
             }
         }
@@ -181,6 +195,24 @@ namespace ElevatorSystem
             }
         }
 
+        private void createStatusBar()
+        {
+            panel1.BorderStyle = StatusBarPanelBorderStyle.Sunken;
+            panel1.Text = "Время раоты сиситемы: 00:00:00";
+            panel1.AutoSize = StatusBarPanelAutoSize.Spring;
+
+            panel2.BorderStyle = StatusBarPanelBorderStyle.Raised;
+            panel2.Text = "Количество перевезённых человек: 0";
+            panel2.AutoSize = StatusBarPanelAutoSize.Contents;
+
+            statusBar1.ShowPanels = true;
+
+            statusBar1.Panels.Add(panel1);
+            statusBar1.Panels.Add(panel2);
+
+            this.Controls.Add(statusBar1);
+        }
+
         public void setNumberOfPerson(int num)
         {
             numberOfPerson = num;
@@ -189,11 +221,6 @@ namespace ElevatorSystem
         public void setNumberOfFloor(int num)
         {
             numberOfFloor = num;
-        }
-
-        private void timerRefresh_Tick(object sender, EventArgs e)
-        {
-            refresh();
         }
 
         private void refresh() {
@@ -206,7 +233,7 @@ namespace ElevatorSystem
                 }
                 else
                 {
-                    //g.DrawImage(Properties.Resources.person_emp, person.PositionX, person.PositionY);
+                    g.DrawImage(Properties.Resources.person_emp, person.PositionX, person.PositionY);
                 }
             }
             
@@ -216,11 +243,57 @@ namespace ElevatorSystem
                 {
                     if (persons[i].PositionX - 85 < floors[0].PositionX) 
                     {
-                       // g.DrawImage(Properties.Resources.person_emp, persons[i].PositionX, persons[i].PositionY);
+                        g.DrawImage(Properties.Resources.person_emp, persons[i].PositionX, persons[i].PositionY);
                         persons.Remove(persons[i]);
                     }
                 }
             }     
+        }
+
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == (char)Keys.Space)
+            {
+                lift.showInfo();
+            }
+        }
+
+        private void MainForm_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void MainForm_MouseEnter(object sender, EventArgs e)
+        {
+            foreach (Person person in persons)
+            {
+                if (Cursor.Position.X >= person.PositionX && Cursor.Position.X <= person.PositionX + 30)
+                {
+                    if (Cursor.Position.Y >= person.PositionY && Cursor.Position.Y <= person.PositionY + 80)
+                    {
+                        person.personClick();
+                    }
+                }
+            }
+
+
+        }
+
+        private void timer1_Tick_1(object sender, EventArgs e)
+        {
+            if (workSystem)
+            {
+                dateTime = dateTime.AddSeconds(1);
+                panel1.Text = "Время работы системы: " + dateTime.ToString("HH:mm:ss");
+                panel2.Text = "Количество перевезённых человек: " + lift.Transported;
+            }
+        }
+
+
+        private void timerRefresh_Tick(object sender, EventArgs e)
+        {
+            refresh();
         }
 
         private void timerLift_Tick(object sender, EventArgs e)
@@ -230,11 +303,10 @@ namespace ElevatorSystem
                 //g.DrawImage(Properties.Resources.lift_emp, lift.OldX, lift.OldY);
                 g.DrawImage(Properties.Resources.lift, lift.PositionX, lift.PositionY);
             }
-            else 
+            else
             {
                 g.DrawImage(Properties.Resources.lift_open, lift.PositionX, lift.PositionY);
             }
         }
-
     }
 }

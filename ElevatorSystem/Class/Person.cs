@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Threading;
+using ElevatorSystem.Forms;
 
 namespace ElevatorSystem
 {
@@ -19,6 +20,7 @@ namespace ElevatorSystem
         private int positionY_old;
         private int lengthFloor;
 
+        private string status;
         private int weight;
 
         private bool wait;
@@ -35,6 +37,7 @@ namespace ElevatorSystem
             lengthFloor = positionX + 370;
 
             this.numberFloor = numberFloor;
+            status = "Движется на этаже " + (numberFloor[0] + 1);
 
             Random rnd = new Random((int)(DateTime.Now.Ticks));
             speedX = 1;
@@ -43,6 +46,12 @@ namespace ElevatorSystem
             exitFloor = false;
             moveInLift = false;
             wait = false;
+        }
+
+        public void personClick()
+        {
+            PersonInformation personInformation = new PersonInformation(status);
+            personInformation.ShowDialog();
         }
 
         public bool NextMove() {
@@ -58,13 +67,17 @@ namespace ElevatorSystem
             else if (!wait && !moveInLift && !exitFloor)
             {
                 wait = true;
+                status = "Ждёт на этаже " + (numberFloor[0] + 1);
                 lift.callTheElevator(numberFloor[0], numberFloor[1]);
             }
             else if (numberFloor[0] == lift.CurrentFloor && !moveInLift && !exitFloor)
             {
                 enable = false;
                 moveInLift = true;
+                lift.Weight = weight;
+                lift.sumWeight = weight;
                 lift.MoveUp = false;
+                status = "Движется на нужный этаж";
                 lift.moveTheElevator(numberFloor[0]);
             }
             else if (numberFloor[1] == lift.CurrentFloor && moveInLift && !exitFloor)
@@ -72,7 +85,9 @@ namespace ElevatorSystem
                 enable = true;
                 exitFloor = true;
                 positionY = lift.PositionY + 15;
+                lift.Weight = -weight;
                 lift.MoveUp = false;
+                status = "Уходит на этаже " + (numberFloor[1] + 1);
                 lift.exitTheElevator(numberFloor[1]);
             } else if (exitFloor) 
             {

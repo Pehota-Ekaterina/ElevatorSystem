@@ -34,6 +34,7 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.buttonStart = new System.Windows.Forms.Button();
             this.error = new System.Windows.Forms.Label();
+            this.labelError = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox1
@@ -76,7 +77,7 @@
             // 
             // buttonStart
             // 
-            this.buttonStart.Location = new System.Drawing.Point(230, 160);
+            this.buttonStart.Location = new System.Drawing.Point(230, 180);
             this.buttonStart.Margin = new System.Windows.Forms.Padding(2);
             this.buttonStart.Name = "buttonStart";
             this.buttonStart.Size = new System.Drawing.Size(76, 35);
@@ -95,11 +96,20 @@
             this.error.Size = new System.Drawing.Size(0, 13);
             this.error.TabIndex = 5;
             // 
+            // labelError
+            // 
+            this.labelError.ForeColor = System.Drawing.Color.Red;
+            this.labelError.Location = new System.Drawing.Point(216, 153);
+            this.labelError.Name = "labelError";
+            this.labelError.Size = new System.Drawing.Size(111, 25);
+            this.labelError.TabIndex = 6;
+            // 
             // StartSimulationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(563, 236);
+            this.Controls.Add(this.labelError);
             this.Controls.Add(this.error);
             this.Controls.Add(this.buttonStart);
             this.Controls.Add(this.textBox2);
@@ -124,5 +134,6 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.Label error;
+        private System.Windows.Forms.Label labelError;
     }
 }

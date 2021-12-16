@@ -33,7 +33,7 @@ namespace ElevatorSystem
 
             if ((firstFloor < 1 || endFloor < 1) || (firstFloor == endFloor))
             {
-                label3.Text = "Данные введены неверно!";
+                labelError.Text = "Данные введены неверно!";
                 textBox1.Text = "";
                 textBox2.Text = "";
             }

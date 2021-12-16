@@ -29,7 +29,7 @@ namespace ElevatorSystem
 
             if ((numberFloor <= 0) || (numberPerson < 0))
             {
-                error.Text = "Неправильно введены данные";
+                labelError.Text = "Неправильно введены данные";
                 textBox1.Text = "";
                 textBox2.Text = "";
             }

@@ -34,6 +34,7 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.buttonCreatPerson = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.labelError = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -60,6 +61,7 @@
             // 
             // textBox1
             // 
+            this.textBox1.ForeColor = System.Drawing.Color.Black;
             this.textBox1.Location = new System.Drawing.Point(259, 13);
             this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Name = "textBox1";
@@ -96,11 +98,20 @@
             this.label3.Size = new System.Drawing.Size(0, 17);
             this.label3.TabIndex = 5;
             // 
+            // labelError
+            // 
+            this.labelError.ForeColor = System.Drawing.Color.Red;
+            this.labelError.Location = new System.Drawing.Point(121, 117);
+            this.labelError.Name = "labelError";
+            this.labelError.Size = new System.Drawing.Size(147, 25);
+            this.labelError.TabIndex = 7;
+            // 
             // CreatePersonForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(389, 197);
+            this.Controls.Add(this.labelError);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.buttonCreatPerson);
             this.Controls.Add(this.textBox2);
@@ -124,5 +135,6 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button buttonCreatPerson;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelError;
     }
 }

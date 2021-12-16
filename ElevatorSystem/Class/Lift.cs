@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ElevatorSystem.Forms;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace ElevatorSystem
         private List<int> floorsEnd;
         private int[] floorCoordinate;
 
+        private LiftInformation liftInfo;
         private int countButtons;
 
         private int positionX;
@@ -24,8 +26,12 @@ namespace ElevatorSystem
         private int positionX_old;
         private int positionY_old;
 
+        private int weight;
+        private int weightSum;
         private int currentFloor;
+        private int changeMoves;
         private bool moveUp;
+        private int idleTrips;
         private int count;
         private bool enable;
         private int speed;
@@ -40,6 +46,7 @@ namespace ElevatorSystem
             positionX_old = positionX;
             positionY_old = positionY;
             this.countButtons = countButtons;
+            weight = 0;
             target = 0;
             currentFloor = -1;
 
@@ -47,6 +54,7 @@ namespace ElevatorSystem
 
             moveUp = true;
             count = -1;
+            weightSum = 0;
 
             enable = true;
 
@@ -54,10 +62,13 @@ namespace ElevatorSystem
             floorsStart = new List<int>();
             floorsEnd = new List<int>();
             floorCoordinate = floorCoord;
+            changeMoves = 0;
+            idleTrips = 0;
             transported = 0;
             
             this.countButtons = countButtons;
-            
+            liftInfo = new LiftInformation(countButtons);
+
 
         }
 
@@ -74,6 +85,11 @@ namespace ElevatorSystem
             return lift;
         }
 
+        public void showInfo()
+        {
+            liftInfo.ShowDialog();
+        }
+
         public static Lift newInstance()
         {
             lift = null;
@@ -88,7 +104,10 @@ namespace ElevatorSystem
             {
                 target = floorsStart[0];
                 moveUp = true;
+                changeMoves++;
+                idleTrips++;
             }
+            liftInfo.painMove(true);
         }
 
         public void moveTheElevator(int floor)
@@ -98,13 +117,16 @@ namespace ElevatorSystem
             if (target == floor)
             {
                 target = floorsEnd[0];
+                changeMoves++;
             }
             else if (floorsStart.Count != 0)
             {
                 target = floorsStart[0];
+                idleTrips++;
             }
+            liftInfo.painButton(target);
+            liftInfo.addWeight(weight);
         }
-
         public void exitTheElevator(int floor)
         {
             count--;
@@ -112,11 +134,25 @@ namespace ElevatorSystem
             if (count > -1 && target == floor)
             {
                 target = floorsEnd[0];
+                liftInfo.painButton(target);
+            }
+            else if (count > -1 && target != floor)
+            {
+                liftInfo.painButton(target);
             }
             else if (floorsStart.Count != 0)
             {
                 target = floorsStart[0];
+                changeMoves++;
+                idleTrips++;
+                liftInfo.painButton(target);
             }
+            else
+            {
+                liftInfo.painMove(false);
+                liftInfo.painButtonFalse();
+            }
+            liftInfo.addWeight(weight);
             transported++;
         }
 
@@ -200,6 +236,29 @@ namespace ElevatorSystem
             }
         }
 
+        public int Weight
+        {
+            get
+            {
+                return weight;
+            }
+            set
+            {
+                weight += value;
+            }
+        }
+
+        public int sumWeight
+        {
+            get
+            {
+                return weightSum;
+            }
+            set
+            {
+                weightSum += value;
+            }
+        }
 
         public int Transported
         {
@@ -209,6 +268,13 @@ namespace ElevatorSystem
             }
         }
 
+        public int MoveChange
+        {
+            get
+            {
+                return changeMoves;
+            }
+        }
 
         public bool MoveUp
         {
@@ -218,6 +284,13 @@ namespace ElevatorSystem
             }
         }
 
+        public int IdleTrips
+        {
+            get
+            {
+                return idleTrips;
+            }
+        }
 
         public int CurrentFloor
         {
