@@ -48,7 +48,7 @@ namespace ElevatorSystem
             this.countButtons = countButtons;
             weight = 0;
             target = 0;
-            currentFloor = -1;
+            currentFloor = 1;
 
             date = DateTime.Now;
 
@@ -58,7 +58,7 @@ namespace ElevatorSystem
 
             enable = true;
 
-            speed = 1;
+            speed = 3;
             floorsStart = new List<int>();
             floorsEnd = new List<int>();
             floorCoordinate = floorCoord;
@@ -76,11 +76,11 @@ namespace ElevatorSystem
         {
             if (lift == null)
             {
-                lock (syncRoot)
-                {
-                    if (lift == null)
+                //lock (syncRoot)
+                //{
+                   // if (lift == null)
                         lift = new Lift(countButtons, positionX, positionY, coordinate);
-                }
+                //}
             }
             return lift;
         }
@@ -143,7 +143,7 @@ namespace ElevatorSystem
             else if (floorsStart.Count != 0)
             {
                 target = floorsStart[0];
-                changeMoves++;
+                //changeMoves++;
                 idleTrips++;
                 liftInfo.painButton(target);
             }
@@ -176,6 +176,7 @@ namespace ElevatorSystem
 
         private void move(int num)
         {
+
             for (int i = 0; i < floorCoordinate.Length; i++) 
             {
                 if (positionY == floorCoordinate[i]) 

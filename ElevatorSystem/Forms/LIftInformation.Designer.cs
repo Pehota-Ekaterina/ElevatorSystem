@@ -42,6 +42,7 @@ namespace ElevatorSystem.Forms
             this.buttonMove.TabIndex = 0;
             this.buttonMove.Text = "Ход";
             this.buttonMove.UseVisualStyleBackColor = true;
+            this.buttonMove.Click += new System.EventHandler(this.buttonMove_Click);
             // 
             // labelOverload
             // 

@@ -15,7 +15,7 @@ namespace ElevatorSystem
         {
             int numberFloor = 0, numberPerson = 0;
 
-            if (textBox1.Text != "" || textBox2.Text != "")
+            if (!string.IsNullOrEmpty(textBox1.Text) || textBox2.Text != "")
             {
                 numberFloor = Convert.ToInt32(textBox1.Text);
                 numberPerson = Convert.ToInt32(textBox2.Text);
@@ -27,13 +27,44 @@ namespace ElevatorSystem
                 textBox1.Text = "";
                 textBox2.Text = "";
             }
-            else {
+            else
+            {
                 ((FirstForm)this.Tag).setNumberOfPerson(numberPerson);
                 ((FirstForm)this.Tag).setNumberOfFloor(numberFloor);
                // ((MainForm)this.Tag).createBuild();
                 this.Close();
             }
        
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void error_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelError_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NumberPerson_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NumberFloor_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

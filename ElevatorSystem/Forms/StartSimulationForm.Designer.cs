@@ -44,6 +44,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(78, 20);
             this.textBox1.TabIndex = 0;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // NumberFloor
             // 
@@ -55,6 +56,7 @@
             this.NumberFloor.Size = new System.Drawing.Size(239, 20);
             this.NumberFloor.TabIndex = 1;
             this.NumberFloor.Text = "Исходное количество этажей:";
+            this.NumberFloor.Click += new System.EventHandler(this.NumberFloor_Click);
             // 
             // NumberPerson
             // 
@@ -66,6 +68,7 @@
             this.NumberPerson.Size = new System.Drawing.Size(246, 20);
             this.NumberPerson.TabIndex = 2;
             this.NumberPerson.Text = "Исходное количество человек:";
+            this.NumberPerson.Click += new System.EventHandler(this.NumberPerson_Click);
             // 
             // textBox2
             // 
@@ -74,6 +77,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(78, 20);
             this.textBox2.TabIndex = 3;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // buttonStart
             // 
@@ -95,6 +99,7 @@
             this.error.Name = "error";
             this.error.Size = new System.Drawing.Size(0, 13);
             this.error.TabIndex = 5;
+            this.error.Click += new System.EventHandler(this.error_Click);
             // 
             // labelError
             // 
@@ -103,6 +108,7 @@
             this.labelError.Name = "labelError";
             this.labelError.Size = new System.Drawing.Size(111, 25);
             this.labelError.TabIndex = 6;
+            this.labelError.Click += new System.EventHandler(this.labelError_Click);
             // 
             // StartSimulationForm
             // 

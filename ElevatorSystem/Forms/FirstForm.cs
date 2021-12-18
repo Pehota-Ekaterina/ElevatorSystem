@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ElevatorSystem ///мое
+namespace ElevatorSystem 
 {
     public partial class FirstForm : Form
     {
@@ -124,7 +124,7 @@ namespace ElevatorSystem ///мое
                     sumPersons++;
                     persons.Add(person);
                 }
-            } catch (Exception ignore){ }
+            } catch (Exception){ }
             
         }
 
